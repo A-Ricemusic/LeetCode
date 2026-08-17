@@ -15,6 +15,6 @@ var maximumSubarraySum = function(nums, k) {
         }
     }
 
-    return res
+    return res === -Infinity? 0 : res
     
 };
