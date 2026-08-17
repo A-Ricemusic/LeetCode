@@ -15,7 +15,7 @@ var maximumSubarraySum = function(nums, k) {
 
     console.log(prefixSum)
     for (let i = 0; i < nums.length; i++) {
-        for (let j = i; j < nums.length; j++) {
+        for (let j = i + 1; j < nums.length; j++) {
             if (Math.abs(nums[i] - nums[j]) === k) {
                 if (i - 1 < 0) {
                     res = Math.max(res, prefixSum[j])
