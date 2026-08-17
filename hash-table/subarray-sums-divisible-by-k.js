@@ -11,8 +11,10 @@ var subarraysDivByK = function(nums, k) {
 
     for (const num of nums) {
         total += num
-        const remain = total % k;
-        if (remain < 0) remain += k;
+        let remain = total % k;
+        if (remain < 0) {
+        remain += k;
+        }
         res += hashMap.get(remain) || 0
         hashMap.set(remain, (hashMap.get(remain) || 0) + 1) 
     }
