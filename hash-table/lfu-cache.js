@@ -92,7 +92,7 @@ LFUCache.prototype.put = function(key, value) {
     if (this.capacity === 0) return
 
     if (this.nodeMap.has(key)) {
-        const node = this.nodeMAp.get(key);
+        const node = this.nodeMap.get(key);
         node.val = value;
         this.counter(node);
         return;
