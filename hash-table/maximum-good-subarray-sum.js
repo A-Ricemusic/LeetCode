@@ -2,30 +2,31 @@
  * @param {number[]} nums
  * @param {number} k
  * @return {number}
- [1,3,6,10,15,21]
  */
 var maximumSubarraySum = function(nums, k) {
-    let res = -Infinity
-    const prefixSum = []
-    let total = 0;
-    for (let i = 0; i < nums.length; i++) {
-        total += nums[i]
-        prefixSum.push(total)
+    const hashMap = new Map();
+    let prefixSum = 0;
+    let res = -Infinity;
+
+    for (const num of nums) {
+        const target1 = num - k;
+        const target2 = num + k;
+
+        if (hashMap.has(target1)) {
+            res = Math.max(res, prefixSum + num - hashMap.get(target1))
+
+        }
+
+        if (hashMap.has(target2)) {
+            res = Math.max(res, prefixSum + num - hashMap.get(target2))
+        }
+
+        if (!hashMap.has(num) || prefixSum < hashMap.get(num)) {
+            hashMap.set(num, prefixSum)
+        }
+        prefixSum += num
     }
 
-    console.log(prefixSum)
-    for (let i = 0; i < nums.length; i++) {
-        for (let j = i + 1; j < nums.length; j++) {
-            if (Math.abs(nums[i] - nums[j]) === k) {
-                if (i - 1 < 0) {
-                    res = Math.max(res, prefixSum[j])
-                } else {
-                    res = Math.max(res, prefixSum[j] - prefixSum[i - 1])
-                }
-                
-            }
-        }
-    }
     return res === -Infinity? 0 : res
-    
+
 };
