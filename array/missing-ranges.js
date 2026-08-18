@@ -12,6 +12,14 @@ var findMissingRanges = function(nums, lower, upper) {
     for (let i = 0; i < nums.length; i++) {
         let num1 = 0;
         let num2 = 0;
+        if (i === 0) {
+            num1 = lower
+            num2 = nums[i] - 1
+            if (num2 >= num1) {
+                res.push([num1,num2])
+            }
+        }
+
         if (i === nums.length - 1) {
             num1 = nums[i] + 1;
             num2 = upper;
@@ -21,14 +29,6 @@ var findMissingRanges = function(nums, lower, upper) {
             continue
         }
 
-
-        if (i === 0) {
-            num1 = lower
-            num2 = nums[i] - 1
-            if (num2 >= num1) {
-                res.push([num1,num2])
-            }
-        }
 
         num1= nums[i] + 1
         num2 = nums[i + 1] - 1
