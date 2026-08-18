@@ -9,8 +9,12 @@ var merge = function(intervals) {
     for (let i = 1; i < intervals.length; i++) {
         const start = intervals[i][0]
         const end = intervals[i][1]
-        if (start <= res[res.length - 1][1]) {
-            res[res.length - 1][1] = end
+        const end2 = res[res.length - 1][1]
+        if (start <= end2) {
+            if (end > end2) {
+                res[res.length - 1][1] = end
+            }
+            
         } else {
             res.push(intervals[i])
         }
