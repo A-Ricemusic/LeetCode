@@ -4,11 +4,16 @@
  * @return {number}
  */
 var minKnightMoves = function(x, y) {
+    x = Math.abs(x)
+    y = Math.abs(y)
+    if (x > y) {
+        [x,y] = [y,x]
+    }
     const q = [[0,0]];
     let head = 0;
     const dirs = [[2,1], [2,-1], [-2,1], [-2,-1], [1,-2], [1,2], [-1,-2], [-1,2]];
     let res = 0;
-    const visited = new Set()
+    const visited = new Set(["0,0"]);
 
     while (q.length - head > 0) {
         const size = q.length - head
@@ -18,7 +23,7 @@ var minKnightMoves = function(x, y) {
             for (const [dx, dy] of dirs) {
                 const nx = x1 + dx
                 const ny = y1 + dy
-                if (visited.has(`${nx},${ny}`)) continue
+                if (nx < -1 || ny < -1 || nx > x + 2 || ny > y + 2 || visited.has(`${nx},${ny}`)) continue
                 q.push([nx,ny])
                 visited.add(`${nx},${ny}`)
             }
