@@ -3,25 +3,24 @@
  * @return {number}
  */
 var maximumPopulation = function(logs) {
-    const dates = []
-    for (const [birth,death] of logs) {
-        dates.push([birth, 1]);
-        dates.push([death, -1]);
+    const arr = new Array(101).fill(0);
+
+    for (const [birth, death] of logs) {
+        arr[birth - 1950]++;
+        arr[death - 1950]--;
     }
 
-    dates.sort()
+    let popMax = arr[0];
+    let year = 1950;
 
-    let pop = 0;
-    let maxPop = 0;
-    let maxYear = 0;
-    for ([year, change] of dates) {
-        pop += change
-        if (pop > maxPop) {
-            maxPop = pop
-            maxYear = year
+    for (let i = 1; i < 101; i++) {
+        arr[i] += arr[i - 1]
+        if (arr[i] > popMax) {
+            popMax= arr[i]
+            year = 1950 + i
         }
     }
 
-    return maxYear
+    return year
     
 };
