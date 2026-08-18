@@ -5,15 +5,15 @@
 var totalFruit = function(fruits) {
     let l = 0;
     let res = 0;
-    let visited = new Set()
+    let visited = new Map()
 
     for (let r = 0; r < fruits.length;  r++) {
-        if (!visited.has(fruits[r])) {
-            visited.add(fruits[r])
-        }
-        if (visited.size > 2) {
-            visited.delete(fruits[l]);
-            l++;
+        visited.set(fruits[r],(visited.get(fruits[r]) || 0) + 1)
+        
+        while (visited.size> 2) {
+            visited.set(fruits[l], visited.get(fruits[l]) - 1)
+            if (visited.get(fruits[l]) === 0) visited.delete(fruits[l])
+            l++
         }
         res = Math.max(res, r - l + 1)
     }
