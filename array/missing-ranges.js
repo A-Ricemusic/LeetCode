@@ -6,6 +6,9 @@
  */
 var findMissingRanges = function(nums, lower, upper) {
     const res = []
+    if (nums.length === 0) {
+        res.push([lower,upper])
+    }
     for (let i = 0; i < nums.length; i++) {
         let num1 = 0;
         let num2 = 0;
