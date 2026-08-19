@@ -7,21 +7,20 @@ var sequenceReconstruction = function(nums, sequences) {
     const adj = new Map()
     const indegrees = new Map()
     for (const seq of sequences) {
-        for (let i = 0; i < seq.length; i++) {
-            if (i >= seq.length - 1) {
-                if (!adj.has(seq[i])) adj.set(seq[i], []);
-                if (!indegrees.has(seq[i])) indegrees.set(seq[i], 0);
-                continue
+        
+        for (const node of seq) {
+            if (!adj.has(node)) {
+                adj.set(node, []);
+                indegrees.set(node, 0);
             }
+        }
 
+        for (let i = 0; i < seq.length - 1; i++) {
             const u = seq[i];
-            const v = seq[i + 1]
-            if (!adj.has(u)) adj.set(u, []);
-            if (!adj.has(v)) adj.set(v,[]);
-            if (!indegrees.has(u)) indegrees.set(u,0);
+            const v = seq[i + 1];
             
             adj.get(u).push(v);
-            indegrees.set(v, (indegrees.get(v) || 0) + 1);
+            indegrees.set(v, indegrees.get(v) + 1);
         }
     }
 
