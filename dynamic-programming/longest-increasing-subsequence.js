@@ -3,18 +3,32 @@
  * @return {number}
  */
 var lengthOfLIS = function(nums) {
-    const memo = new Map()
-    const dfs = (i, prev) => {
-        if (i >= nums.length) return 0;
-        const state = `${i},${prev}`
-        if (memo.has(state)) return memo.get(i)
-        const c1 = prev < nums[i]? dfs(i + 1,nums[i]) + 1: 0
-        const c2 = dfs(i + 1, prev)
-        const res = Math.max(c1,c2)
-        memo.set(i,res)
-        return res
+    const sub = [nums[0]];
 
-    }
-    return dfs(0, -Infinity)
+    /* 
+        nums = [10,9,2,5,3,7,2,18]
+        sub = [2,3,7]
+        i = 2
     
+    */
+
+    for (let i = 1; i < nums.length; i++) {
+        if (nums[i] > sub[sub.length - 1]) {
+            sub.push(nums[i]);
+        } else {
+            let l = 0
+            let r = sub.length - 1
+            while (l < r) {
+                const m = Math.floor(l + (r - l) / 2)
+                if (sub[m] < nums[i]) {
+                    l = m + 1
+                } else {
+                    r = m
+                }
+            }
+            sub[l] = nums[i]
+        }
+    }
+
+    return sub.length;
 };
