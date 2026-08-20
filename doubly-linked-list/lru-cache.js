@@ -77,7 +77,7 @@ LRUCache.prototype.get = function(key) {
 LRUCache.prototype.put = function(key, value) {
     const newNode = new ListNode(key,value)
     if (this.hashMap.has(key)) {
-        const nodeToDelete = hashMap.get(key);
+        const nodeToDelete = this.hashMap.get(key);
         this.linkedList.delete(nodeToDelete)
     }
     this.hashMap.set(key, newNode)
