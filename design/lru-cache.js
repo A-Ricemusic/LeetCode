@@ -1,5 +1,14 @@
 /**
  * @param {number} capacity
+    cap = 2
+    {
+    2: 1(0)
+    1: 1(1)
+    }
+
+    1(0) <- 1(1)
+
+
  */
 var ListNode = function(key,val) {
     this.val = val;
@@ -73,21 +82,35 @@ LRUCache.prototype.get = function(key) {
  * @param {number} key 
  * @param {number} value
  * @return {void}
+
+ cap = 2
+ length = 2
+    {
+    2: 3
+    1: 1(1)
+    }
+
+     1(1) <- 3
+
+    newNode(key = 2, val = 3)
+
  */
 LRUCache.prototype.put = function(key, value) {
     const newNode = new ListNode(key,value)
     if (this.hashMap.has(key)) {
         const nodeToDelete = this.hashMap.get(key);
         this.linkedList.delete(nodeToDelete)
+        this.length--;
     }
     this.hashMap.set(key, newNode)
     this.linkedList.push(newNode)
-    if (this.length === this.cap) {
+    this.length++;
+    if (this.length > this.cap) {
         const delNode = this.linkedList.pop()
         this.hashMap.delete(delNode.key)
         this.length--;
     }
-    this.length++;
+    
 };
 
 /** 
