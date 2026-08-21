@@ -6,7 +6,7 @@
  */
 var distanceBetweenBusStops = function(distance, start, destination) {
 
-    if (start < destination) {
+    if (start > destination) {
         const tmp = start;
         start = destination;
         destination = tmp;
