@@ -2,11 +2,9 @@
  * @param {number[]} nums
  */
 var NumArray = function(nums) {
-    this.prefixSum = []
-    let total = 0
+    this.prefix = [0]
     for (const num of nums) {
-        total += num
-        this.prefixSum.push(total)
+        this.prefix.push(this.prefix[this.prefix.length - 1] + num)
     }
     
 };
@@ -15,12 +13,9 @@ var NumArray = function(nums) {
  * @param {number} left 
  * @param {number} right
  * @return {number}
-
- [-2,0,1,-4,-2,-3]
  */
 NumArray.prototype.sumRange = function(left, right) {
-    if (left === 0) return this.prefixSum[right]
-    return this.prefixSum[right] - this.prefixSum[left - 1]
+    return this.prefix[right + 1] - this.prefix[left]
     
 };
 
