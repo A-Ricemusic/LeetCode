@@ -17,7 +17,9 @@ var maxSubArrayLen = function(nums, k) {
         if (hashMap.has(total - k)) {
             res = Math.max(res, i - hashMap.get(total - k))
         }
-        hashMap.set(total, i)
+        if (!hashMap.has(total)) {
+            hashMap.set(total, i)
+        }
     }
 
 
