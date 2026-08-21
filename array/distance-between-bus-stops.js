@@ -6,14 +6,14 @@
  */
 var distanceBetweenBusStops = function(distance, start, destination) {
 
-    if (start > destination) {
-        let tmp = start
-        start = destination
-        destination = tmp
+    if (start < destination) {
+        const tmp = start;
+        start = destination;
+        destination = tmp;
     }
 
-    let res = 0
-    let total = 0
+    let res = 0;
+    let total = 0;
 
     for (let i = 0; i < distance.length; i++) {
         if (i >= start && i < destination) {
@@ -21,7 +21,6 @@ var distanceBetweenBusStops = function(distance, start, destination) {
         }
         total += distance[i]
     }
-
-    return Math.min(res, total - res)
     
+    return Math.min(res, total - res)
 };
