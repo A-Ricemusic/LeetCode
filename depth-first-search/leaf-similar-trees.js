@@ -19,9 +19,15 @@ var leafSimilar = function(root1, root2) {
         if (!root.left && !root.right) {
             arr.push(root.val)
         }
-        dfs(root.left, arr)
-        dfs(root.right,arr)
+        if (root.left) {
+            dfs(root.left, arr)
+        }
+
+        if (root.right) {
+            dfs(root.right,arr)
+        }
     }
+    
     dfs(root1,arr1)
     dfs(root2,arr2)
     if (arr1.length !== arr2.length) return false;
