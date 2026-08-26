@@ -15,35 +15,18 @@ n = number of nodes in the tree
  space: o(n)
  */
 var reverseOddLevels = function(root) {
-    let q = [root];
-    let head = 0;
-    let level = 0;
-    while (q.length - head > 0) {
-        const size = q.length - head;
-        const arr = []
-        for (let i = 0; i < size; i++) {
-            const node = q[head++];
-            arr.push(node)
-            if (node.left) {
-                q.push(node.left);
-            }
-            if (node.right) {
-                q.push(node.right);
-            }
+    const dfs = (left, right, level) => {
+        if (!left || !right) {
+            return 
         }
         if (level % 2 === 1) {
-            let l = 0;
-            let r = arr.length - 1;
-            while (l < r) {
-                [arr[l].val, arr[r].val] = [arr[r].val, arr[l].val]
-                l++;
-                r--;
-            }
+            [left.val, right.val] = [right.val, left.val]
         }
-        level++;
-    }
-   
-    return root;
 
-    
+        dfs(left.left,right.right, level + 1)
+        dfs(right.left, left.right, level + 1)
+    }
+
+    dfs(root.left, root.right, 1)
+    return root
 };
