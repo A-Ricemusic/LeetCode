@@ -9,6 +9,5 @@ var smallestEvenMultiple = function(n) {
             return i
         }
     }
-    return -1
     
 };
