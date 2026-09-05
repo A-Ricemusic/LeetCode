@@ -9,21 +9,14 @@
  * @param {number[]} nums
  * @param {ListNode} head
  * @return {ListNode}
-
-
-    Input: nums = [2,3], head = [1,2,3,4,5]
-    nums => set(2,3) 
-
-    tmp = 2
-    curr = 2
-    prev = 1
-   
+ n = number of nodes in linked list
+ m = number of elements in nums array
+ time: o(n)
+ space: o(m)
  */
 var modifiedList = function(nums, head) {
-    const mySet = new Set(); // new Set([...nums])
-    for (const num of nums) {
-        mySet.add(num)
-    };
+    const mySet = new Set([...nums])
+    
     const dummy = new ListNode(0,head);
     let prev = dummy;
     let curr = head;
