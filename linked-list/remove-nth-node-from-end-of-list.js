@@ -12,12 +12,10 @@
  */
 var removeNthFromEnd = function(head, n) {
 
-    //d -> 1 -> 2 -> 3 -> 4 -> 5
     const dummy = new ListNode(0);
     dummy.next = head;
 
-    const reverseList = (node,prev) => {
-        let curr = node;
+    const reverseList = (curr,prev) => {
         while (curr) {
             const tmp = curr.next;
             curr.next = prev
@@ -27,7 +25,7 @@ var removeNthFromEnd = function(head, n) {
         return prev;
     }
 
-    let tail = reverseList(head, dummy);
+    let tail = reverseList(dummy, null);
     let nodeToRemove = tail;
     let count = 1;
     while (count < n) {
