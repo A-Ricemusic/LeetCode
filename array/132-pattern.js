@@ -9,7 +9,7 @@
  */
 var find132pattern = function(nums) {
     let stack = []
-    for (let i = 0; i < ums.length; i++) {
+    for (let i = 0; i < nums.length; i++) {
         while (stack.length !== 0 && nums[i] < stack.at(-1)) {
             if (nums[i] > stack.at(-1)) return true;
             stack.pop();
