@@ -1,6 +1,10 @@
 /**
  * @param {number[][]} grid
  * @return {number}
+
+
+  time: o((n*m)^2)
+  space: o(n * m)
  */
 var getMaximumGold = function(grid) {
     const visited = new Set();
@@ -9,19 +13,17 @@ var getMaximumGold = function(grid) {
     let res = 0;
     const dirs = [[1,0],[0,1],[-1,0],[0,-1]];
 
-    const dfs = (r,c) => {
-        if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] === 0) return 0;
-        let amt =  grid[r][c]; // 6
-        let curr = grid[r][c];
+    const dfs = (r,c,amt) => {
+        let curr = amt;
         for (const [dr,dc] of dirs) {
             const nr = dr + r;
             const nc = dc + c;
-            const state = `${nr},${nc}`
-            if (!visited.has(state)) {
-                visited.add(state);
-                curr = Math.max(curr, dfs(nr,nc) + amt);
-                visited.delete(state);
-            }
+            if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || grid[nr][nc] === 0) continue;
+            const tmp = grid[nr][nc];
+            grid[nr][nc] = 0;
+            curr = Math.max(curr, dfs(nr,nc,tmp) + amt);
+            grid[nr][nc] = tmp;
+
         }
         return curr;
     };
@@ -29,9 +31,10 @@ var getMaximumGold = function(grid) {
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
             if (grid[r][c] !== 0) {
-                visited.add(`${r},${c}`)
-                res = Math.max(res,dfs(r,c))
-                visited.delete(`${r},${c}`)
+                const tmp = grid[r][c]
+                grid[r][c] = 0
+                res = Math.max(res,dfs(r,c,tmp))
+                grid[r][c] = tmp
             }
         }
     }
