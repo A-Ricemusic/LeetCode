@@ -1,23 +1,21 @@
 /**
  * @param {number[]} nums
  * @return {boolean}
+ nums[i] = 2
+ [1]
+ nums = [3,1,4,2]
 
-  nums = [3,2,5,10,7,2,4]
-  currMax = 3
-  currMin = 2
-
+ 
  */
 var find132pattern = function(nums) {
-    let currMin = nums[0];
-    let currMax = nums[0];
-    for (let i = 1; i < nums.length; i++) {
-        if (nums[i] > currMin) {
-            for (let j = i + 1; j < nums.length; j++) {
-                if (nums[j] < nums[i] && nums[j] > currMin) return true;
-            }
+    let stack = []
+    for (let i = 0; i < ums.length; i++) {
+        while (stack.length !== 0 && nums[i] < stack.at(-1)) {
+            if (nums[i] > stack.at(-1)) return true;
+            stack.pop();
         }
-        currMin = Math.min(currMin, nums[i]);
-        currMax = Math.max(currMax, nums[i])
+
+        stack.push(nums[i])
     }
 
     return false;
