@@ -2,13 +2,7 @@
  * @param {number[][]} wall
  * @return {number}
 
- {
- 1: 3
- 2: 1
- 3: 3
- 4: 4
- 5: 2
- }
+
 
  */
 var leastBricks = function(wall) {
@@ -30,6 +24,6 @@ var leastBricks = function(wall) {
         maxGap = Math.max(val, maxGap)
     }
 
-    return len - maxGap
+    return  wall.length - maxGap
     
 };
