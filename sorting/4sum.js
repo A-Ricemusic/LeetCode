@@ -6,9 +6,10 @@
 var fourSum = function(nums, target) {
     let res = [];
     nums.sort((a,b) => a - b);
-    const visited = new Set();
     for (let i = 0; i < nums.length - 3; i++) {
-        for (let j = i + 1; j < nums.length - 2; j++) {
+        if (i > 0 && nums[i] === nums[i - 1]) continue;
+        for (let j = i +1; j < nums.length - 2; j++) {
+            if (j > 1 && nums[j] === nums[j - 1]) continue;
             let l = j + 1
             let r = nums.length - 1
             while (l < r) {
@@ -19,13 +20,16 @@ var fourSum = function(nums, target) {
                     l++;
                 } else {
                     const arr = [nums[i], nums[j], nums[l], nums[r]];
-                    arr.sort((a,b) => a - b);
-                    const key = arr.join(",")
-                    if (!visited.has(key)) {
-                        visited.add(key)
-                        res.push(arr);
-                    }
+                    res.push(arr)
                     l++;
+                    r--;
+                    while (l < r && nums[l] === nums[l - 1]) {
+                        l++;
+                    }
+
+                    while (r > l && nums[r] === nums[r + 1]) {
+                        r--;
+                    }
                 }
             }
         }
