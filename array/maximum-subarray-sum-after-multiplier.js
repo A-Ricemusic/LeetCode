@@ -23,17 +23,15 @@ var maxSubarraySum = function(nums, k) {
     let res = Math.max(...c1, ...c2);
     
     for (let i = 1; i < nums.length; i++) {
-        count1 += c1[i];
-        count2 += c2[i];
-        res = Math.max(res, count1,count2)
-
         if (count1 < 0) {
             count1 = 0;
         };
         if (count2 < 0) {
             count2 = 0;
         };
-
+        count1 += c1[i];
+        count2 += c2[i];
+        res = Math.max(res, count1,count2)
     }
 
     return res;
