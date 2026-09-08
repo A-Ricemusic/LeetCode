@@ -7,34 +7,35 @@
  space: o(n)
  */
 var maxSubarraySum = function(nums, k) {
-    const c1 = [];
-    const c2 = [];
-    for (const num of nums) {
-        c1.push(num * k);
-        if (num < 0) {
-            c2.push(Math.ceil(num / k));
-        } else {
-            c2.push(Math.floor(num / k));
+    const NEG_INF = -Infinity;
+    function divTrunc(x,k) {
+        return x < 0? Math.ceil(x / k) : Math.floor(x / k);
+    };
+
+    let ans = NEG_INF;
+
+
+    function solve(mult) {
+        let dp0 = 0;
+        let dp1 = NEG_INF;
+        let dp2 = NEG_INF;
+
+        for (const x of nums) {
+            const val = mult? x * k : divTrunc(x,k);
+            const ndp0 = Math.max(0,dp0) + x;
+            const ndp1 = Math.max(0,dp0, dp1 === NEG_INF ? NEG_INF : dp1) + val;
+            const ndp2 = (dp1 === NEG_INF && dp2 === NEG_INF) ? NEG_INF : Math.max(dp1 === NEG_INF ? NEG_INF : dp1, dp2 === NEG_INF ? NEG_INF : dp2) + x;
+            ans = Math.max(ans, ndp1);
+            if (ndp2 !== NEG_INF) {
+                ans = Math.max(ans,ndp2);
+            };
+            dp0 = ndp0;
+            dp1 = ndp1;
+            dp2 = ndp2;
         }
     }
-
-    let count1 = c1[0];
-    let count2 = c2[0];
-    let res = Math.max(...c1, ...c2);
-    
-    for (let i = 1; i < nums.length; i++) {
-        if (count1 < 0) {
-            count1 = 0;
-        };
-        if (count2 < 0) {
-            count2 = 0;
-        };
-        count1 += c1[i];
-        count2 += c2[i];
-        res = Math.max(res, count1,count2)
-    }
-
-    return res;
-
+    solve(true);
+    solve(false);
+    return ans;
     
 };
