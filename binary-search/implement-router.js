@@ -16,13 +16,15 @@ var Router = function(memoryLimit) {
  * @return {boolean}
  */
 Router.prototype.addPacket = function(source, destination, timestamp) {
-    if (this.q.length - this.head > this.cap) {
-        this.head++;
-    }
-    const key = `${source},${destination},${timestamp}`;
-    if (this.packets.has(key)) return false;
+    const key2 = `${source},${destination},${timestamp}`;
+    if (this.packets.has(key2)) return false;
     this.q.push([source, destination, timestamp]);
-    this.packets.add(key);
+    this.packets.add(key2);
+    if (this.q.length - this.head > this.cap) {
+        const arr = this.q[this.head++];
+        const key = `${arr[0]},${arr[1]},${arr[2]}`
+        this.packets.delete(key);
+    }
     return true; 
 };
 
@@ -31,10 +33,9 @@ Router.prototype.addPacket = function(source, destination, timestamp) {
  */
 Router.prototype.forwardPacket = function() {
     if (this.q.length - this.head === 0) return [];
-    const arr = this.q[this.head];
+    const arr = this.q[this.head++];
     const key = `${arr[0]},${arr[1]},${arr[2]}`
     this.packets.delete(key);
-    this.head++;
     return arr; 
 };
 
@@ -45,7 +46,15 @@ Router.prototype.forwardPacket = function() {
  * @return {number}
  */
 Router.prototype.getCount = function(destination, startTime, endTime) {
-    return this.q.length - this.head;
+    let res = 0;
+    for (let i = this.head; i < this.q.length; i++) {
+        const [source, des, timestamp] = this.q[i];
+        if (des === destination && startTime <= timestamp && timestamp <= endTime) {
+            res++;
+        }
+    }
+
+    return res;
 };
 
 /** 
