@@ -4,7 +4,7 @@
  * @return {number}
 
  time: o(n)
- space: o(n)
+ space: o(1)
  */
 var maxSubarraySum = function(nums, k) {
     const NEG_INF = -Infinity;
