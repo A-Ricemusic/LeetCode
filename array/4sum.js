@@ -25,9 +25,7 @@ var fourSum = function(nums, target) {
                         visited.add(key)
                         res.push(arr);
                     }
-                    while (l < r && nums[l - 1] === nums[l]) {
-                        l++;
-                    }
+                    l++;
                 }
             }
         }
