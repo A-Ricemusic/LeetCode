@@ -2,40 +2,37 @@
  * @param {number[]} nums
  * @param {number} k
  * @return {number}
-
- time: o(n)
- space: o(1)
  */
 var maxSubarraySum = function(nums, k) {
-    const NEG_INF = -Infinity;
-    function divTrunc(x,k) {
-        return x < 0? Math.ceil(x / k) : Math.floor(x / k);
+    const NEG_INF = -Number.MAX_SAFE_INTEGER;
+    function divtrunc(x, k) {
+        return x > 0? Math.floor(x / k) : Math.ceil(x / k);
     };
 
     let ans = NEG_INF;
-
-
-    function solve(mult) {
+    function solve(multiply) {
         let dp0 = 0;
         let dp1 = NEG_INF;
         let dp2 = NEG_INF;
 
         for (const x of nums) {
-            const val = mult? x * k : divTrunc(x,k);
+            const val = multiply? x * k : divtrunc(x,k);
             const ndp0 = Math.max(0,dp0) + x;
-            const ndp1 = Math.max(0,dp0, dp1 === NEG_INF ? NEG_INF : dp1) + val;
-            const ndp2 = (dp1 === NEG_INF && dp2 === NEG_INF) ? NEG_INF : Math.max(dp1 === NEG_INF ? NEG_INF : dp1, dp2 === NEG_INF ? NEG_INF : dp2) + x;
+            const ndp1 = Math.max(0, dp0, dp1) + val;
+            const bestPrevious = Math.max(dp1, dp2);
+            const ndp2 = bestPrevious === NEG_INF ? NEG_INF : bestPrevious + x;
             ans = Math.max(ans, ndp1);
-            if (ndp2 !== NEG_INF) {
-                ans = Math.max(ans,ndp2);
-            };
+            if (ndp2 !== NEG_INF) ans = Math.max(ans, ndp2);
             dp0 = ndp0;
             dp1 = ndp1;
             dp2 = ndp2;
         }
+
+
     }
+
     solve(true);
     solve(false);
+
     return ans;
-    
 };
