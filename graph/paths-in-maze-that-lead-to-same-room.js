@@ -28,7 +28,7 @@ var numberOfPaths = function(n, corridors) {
 
     let final = 0
     for (let i = 1; i <=n; i++) {
-        final += dfs(i,i,len)
+        final += dfs(i,i,0)
     }
 
     return final;
