@@ -22,7 +22,7 @@ var maxNumberOfFamilies = function(n, reservedSeats) {
     let ans = (n - occupied.size) * 2;
     for (const bitmask of occupied.values()) {
         if (
-            (bitmask | left === left) ||
+            (bitmask | left) === left ||
         (bitmask | middle) === middle ||
         (bitmask | right) === right
         ) {
