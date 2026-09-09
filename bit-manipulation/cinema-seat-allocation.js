@@ -47,30 +47,24 @@ var maxNumberOfFamilies = function(n, reservedSeats) {
         }
     }
 
-    let res = 0;
+    let res = n * 2;
 
-    for (let i = 1; i <= n; i++) {
-        if (!hashMap.has(i)) {
-            res += 2;
-            continue;
-        }
+    for (const i of hashMap.keys()) {
         const row = hashMap.get(i);
         const leftBlocked = row.has(0);
         const middleBlocked = row.has(1);
         const rightBlocked = row.has(2);
-
-        // Left and right don't overlap, so both can be used.
         if (!leftBlocked && !rightBlocked) {
-            res += 2;
+           continue;
+        } else if (!leftBlocked || !middleBlocked || !rightBlocked) {
+            res -= 1
+        } else {
+            res -= 2
         }
-        // Otherwise, if at least one group works, we get 1 family.
-        else if (!leftBlocked || !middleBlocked || !rightBlocked) {
-            res += 1;
-        }
+
     }
+
 
     return res;
 
-
-    
 };
