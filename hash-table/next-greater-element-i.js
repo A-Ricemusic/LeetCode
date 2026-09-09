@@ -20,8 +20,8 @@
 var nextGreaterElement = function(nums1, nums2) {
     const hashMap = new Map();
     let stack = []
-    for (const num of nums) {
-        while (stack.length !=== 0 && stack.at(-1) < num) {
+    for (const num of nums2) {
+        while (stack.length !== 0 && stack.at(-1) < num) {
             const num2 = stack.pop()
             hashMap.set(num2, num);
         }
