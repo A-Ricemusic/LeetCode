@@ -40,12 +40,11 @@ var subtract = function(a,b) {
             }
         } else if (c1 === 0 && c2 === 1) {
             if (borrow === 1) {
-                res.push("1");
-                borrow = 1;
+                res.push("0");
             } else {
                 res.push("1");
-                borrow = 1;
             }
+            borrow = 1;
         } else if (c1 === 0 && c2 === 0) {
             if (borrow === 1) {
                 res.push("1");
