@@ -26,13 +26,6 @@ var maxNumberOfFamilies = function(n, reservedSeats) {
     const groupZero = new Set([2,3,4,5]);
     const groupOne = new Set([4,5,6,7]);
     const groupTwo = new Set([6,7,8,9]);
-    for (let i = 1; i <= n; i++) {
-        hashMap.set(i, new Map());
-        for (let j = 0; j < 3; j++) {
-            hashMap.get(i).set(j, false)
-        };
-    };
-
     
     for (const [row, seat] of reservedSeats) {
         let count = 3
@@ -47,6 +40,9 @@ var maxNumberOfFamilies = function(n, reservedSeats) {
             groups.push(2);
         }
         for (const g of groups) {
+            if (!hashMap.has(row)) {
+                hashMap.set(row, new Map())
+            }
             hashMap.get(row).set(g, true);
         }
     }
@@ -54,10 +50,14 @@ var maxNumberOfFamilies = function(n, reservedSeats) {
     let res = 0;
 
     for (let i = 1; i <= n; i++) {
+        if (!hashMap.has(i)) {
+            res += 2;
+            continue;
+        }
         const row = hashMap.get(i);
-        const leftBlocked = row.get(0);
-        const middleBlocked = row.get(1);
-        const rightBlocked = row.get(2);
+        const leftBlocked = row.has(0);
+        const middleBlocked = row.has(1);
+        const rightBlocked = row.has(2);
 
         // Left and right don't overlap, so both can be used.
         if (!leftBlocked && !rightBlocked) {
