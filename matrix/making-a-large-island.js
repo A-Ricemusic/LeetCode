@@ -1,11 +1,9 @@
 /**
  * @param {number[][]} grid
  * @return {number}
-grid = [[1,1],
-        [0,0]]
- }
-
- {
+    n =  length of rows
+    m = length of cols
+ time: o((n * m))
  
  }
  */
