@@ -30,5 +30,5 @@ var findTargetSumWays = function(nums, target) {
         }
     }
 
-    return dp[nums.length - 1][sum + target]
+    return sum + target >= totalSum? 0 : dp[nums.length - 1][sum + target]
 };
