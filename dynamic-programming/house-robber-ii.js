@@ -1,20 +1,18 @@
 /**
  * @param {number[]} nums
  * @return {number}
-
- nums = [7,1,3,5]
-        [7,7,10,0]
  */
 
  var houseRob = function(nums) {
     const n = nums.length;
-    const dp = new Array(n).fill(0);
-    dp[0] = nums[0];
-    dp[1] = Math.max(nums[0], nums[1]);
+    let prev = nums[0];
+    let curr = Math.max(nums[0], nums[1]);
     for (let i = 2; i < nums.length; i++) {
-        dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i])
+        const tmp = curr
+        curr = Math.max(curr, prev + nums[i])
+        prev = tmp
     }
-    return dp[nums.length - 1]
+    return curr
 }
 
 var rob = function(nums) {
