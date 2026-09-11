@@ -22,7 +22,7 @@ var rob = function(nums) {
         return nums[0];
     };
     if (nums.length === 2) {
-        return 0
+        return Math.max(nums[0], nums[1])
     };
     const res1 = houseRob(nums.slice(0, nums.length - 1));
     const res2 = houseRob(nums.slice(1, nums.length));
