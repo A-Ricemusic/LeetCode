@@ -2,68 +2,58 @@
  * @param {string[]} classroom
  * @param {number} energy
  * @return {number}
+
  */
 var minMoves = function(classroom, energy) {
-    for (let i = 0; i < classroom.length; i++) {
-        const row = classroom[i].split("");
-        classroom[i] = row;
-    }
-    const grid = classroom
-    const rows = grid.length;
-    const cols = grid[0].length;
-    let res = Infinity;
-    let litterCount = 0
-    let start = [0,0]
-    let dirs = [[1,0], [0,1], [-1,0], [0,-1]];
-
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-            if (grid[r][c] === "S") {
-                start[0] = r
-                start[1] = c
-            } else if (grid[r][c] === "L") {
-                litterCount++;
+    const dx = [0,1,0,-1]
+    const dy = [1,0,-1,0]
+    const n = classroom.length;
+    const m = classroom[0].length;
+    const id = new Array({length: n}, () => new Array(m).fill(0))
+    let sx = 0;
+    let sy = 0;
+    let count = 0;
+    for (let r = 0; r < n; r++) {
+        for (let c = 0; c < m; c++) {
+            if (classroom[r][c] === "S") {
+                sx = r;
+                sy = c;
+            } else if (classroom[r][c] === "L") {
+                id[r][c] = 1 << count
+                count++;
             }
         }
     }
 
-    const q = [[start[0], start[1], energy,0, new Set()]] // r,c,energy,moves,litterSet
-    let head = 0
-    const visited = new Set();
-
+    const full = 1 << count;
+    const bestEnergy = Array.from({length: n},() => Array.from({length: m}, () => new Array(full).fill(-1)));
+    bestEnergy[sx][sy][0] = energy;
+    const q = [{x: sx, y: sy, mask: 0, e: energy, steps: 0}]
+    let head = 0;
     while (q.length - head > 0) {
-        let [r,c,e,moves,litterSet] = q[head++];
-        if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] === "X") continue;
-        
-        const newLitterSet = new Set(litterSet);
+        const t = q[head++];
+        if (t.mask === full - 1) return t.steps;
+        if (t.e === 0) continue;
 
-        if (grid[r][c] === "L") {
-            newLitterSet.add(`${r},${c}`);
-        } else if (grid[r][c] === "R") {
-            e = energy;
-        };
-
-        if (newLitterSet.size === litterCount) return moves;
-        if (e === 0) continue;
-        
-        const litterKey = [...newLitterSet].sort().join(",");
-
-        const stateKey = `${r},${c},${e},${litterKey}`;
-
-        if (visited.has(stateKey)) {
-            continue;
+        for (let d = 0; d < 4; d++) {
+            const nx = t.x + dx[d];
+            const ny = t.y + dy[d];
+            if (nx < 0 || nx >= n || ny < 0 || ny >= m || classroom[nx][ny] === "X") continue;
+            const ne = classroom[nx][ny] === "R"? energy : t.e - 1
+            const nmask = t.mask | id[nx][ny]
+            if (ne > bestEnergy[nx][ny][nmask]) {
+                bestEnergy[nx][ny][nmask] = ne;
+                q.push({
+                    x: nx,
+                    y: ny,
+                    mask: nmask,
+                    e: ne,
+                    steps: t.steps + 1,
+                })
+            }
         }
-
-        visited.add(stateKey);
-
-        for (const [dr,dc] of dirs) {
-            q.push([r + dr,c + dc, e - 1,moves + 1,newLitterSet])
-        }
-
     }
 
-    return -1
-
-
+    return -1;
     
 };
