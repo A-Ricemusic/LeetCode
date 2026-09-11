@@ -12,7 +12,7 @@ var subarraySum = function(nums, k) {
     for (const num of nums) {
         total += num;
         res += (hashMap.get(total - k) ?? 0);
-        hashMap.set(total, (hashMap.het(total) ?? 0) + 1);
+        hashMap.set(total, (hashMap.get(total) ?? 0) + 1);
     }
 
     return res;
