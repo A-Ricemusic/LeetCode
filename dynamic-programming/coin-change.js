@@ -14,8 +14,8 @@ var coinChange = function(coins, amount) {
     for (let i = 1; i <= amount; i++) {
         let minCoins = Infinity;
         for (const coin of coins) {
-            if (i - coins < 0) continue;
-            minCoins = Math.min(dp[i - coins], minCoins);
+            if (i - coin < 0) continue;
+            minCoins = Math.min(dp[i - coin], minCoins);
         }
         dp[i] = minCoins + 1
     }
