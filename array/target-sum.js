@@ -21,11 +21,11 @@ var findTargetSumWays = function(nums, target) {
     for (let i = 1; i < nums.length; i++) {
         for (let j = 0; j < totalSum; j++) {
             if (j === 0) {
-                dp[i][j] = dp[i - 1][j + 1];
+                dp[i][j] = dp[i - 1][j + nums[i]];
             } else if (j === totalSum - 1) {
-                dp[i][j] = dp[i - 1][j - 1];
+                dp[i][j] = dp[i - 1][j - nums[i]];
             } else {
-                dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j + 1];
+                dp[i][j] = dp[i - 1][j - nums[i]] + dp[i - 1][j + nums[i]];
             }
         }
     }
