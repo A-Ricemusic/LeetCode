@@ -9,7 +9,7 @@ var minMoves = function(classroom, energy) {
     const dy = [1,0,-1,0]
     const n = classroom.length;
     const m = classroom[0].length;
-    const id = new Array({length: n}, () => new Array(m).fill(0))
+    const id = Array.from({length: n}, () => new Array(m).fill(0))
     let sx = 0;
     let sy = 0;
     let count = 0;
