@@ -2,26 +2,24 @@
  * @param {number[]} coins
  * @param {number} amount
  * @return {number}
- amount = 11 
- [10,1]
-  [[9,1], [6,1], [9,2], [8,2], [5,2]]
+ time: o(n * m)
+ space: o(n * m)
+  0 1 2 3 4 5 6 7 8 9 10 11
+ [0,1,1,I,I,I,I,I,I,I,I,I]
  */
 var coinChange = function(coins, amount) {
-    const q = [[amount, 0]];
-    const visited = new Set()
-    let head = 0;
-    while (q.length - head > 0) {
-        const [amt, numOfCoins] = q[head++];
-        if (visited.has(amt)) continue;
-        visited.add(amt);
-        if (amt === 0) return numOfCoins;
-        if (amt < 0) continue;
+    const dp = new Array(amount + 1).fill(Infinity);
+    dp[0] = 0;
+
+    for (let i = 1; i <= amount; i++) {
+        let minCoins = Infinity;
         for (const coin of coins) {
-            q.push([amt - coin,numOfCoins + 1])
+            if (i - coins < 0) continue;
+            minCoins = Math.min(dp[i - coins], minCoins);
         }
+        dp[i] = minCoins + 1
     }
 
-    return -1
-
+    return dp[amount] === Infinity? -1 : dp[amount]
     
 };
