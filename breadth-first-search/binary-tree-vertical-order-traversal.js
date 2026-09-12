@@ -31,7 +31,7 @@ var verticalOrder = function(root) {
         preorder(curr.right, pos + 1)
     }
 
-    dfs(root,0)
+    preorder(root,0)
     const entries = [...hashMap.entries()].sort((a,b) => a[0] - b[0]);
 
     const res = []
