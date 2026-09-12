@@ -16,27 +16,27 @@ var isOneEditDistance = function(s, t,curr) {
     const m = t.length;
     const dfs = (i,j) => {
         if (i >= n) {
-            return m - j;
+            return m - j === 1;
         }
         if (j >= m) {
-            return n - i;
+            return n - i === 1;
         }
         const state = `${i},${j}`;
         if (memo.has(state)) return memo.get(state);
         if (curr > 1) {
-            memo.set(state, Infinity);
-            return Infinity;
+            memo.set(state, false);
+            return false;
         }
         let res
         if (s[i] === t[j]) {
             res = dfs(i + 1,j + 1,curr)
         } else {
-            res = Math.min(dfs(i + 1,j,curr + 1), dfs(i,j + 1,curr + 1), dfs(i + 1,j + 1,curr + 1)) + 1
+            res = dfs(i + 1,j,curr + 1) || dfs(i,j + 1,curr + 1) || dfs(i + 1,j + 1,curr + 1)
         }
         memo.set(state, res)
         return res;
     }
 
-    return dfs(0,0,0) === 1
+    return dfs(0,0,0)
     
 };
