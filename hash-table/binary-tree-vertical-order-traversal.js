@@ -10,28 +10,34 @@
  * @param {TreeNode} root
  * @return {number[][]}
  hashMap = {
- 0: [3,0,1]
- -1: [9]
- -2: [4]
- 1: [8]
- 2: [7]
+  []
  }
  
  */
 var verticalOrder = function(root) {
-    const hashMap = new Map()
+    if (!root) return []
+    const hashMap = new Map();
 
-    const preorder = (curr, pos) => {
-        if (!curr) return;
-        if (!hashMap.has(pos)) {
-            hashMap.set(pos, [])
+    const q = [[root,0]]
+    let head = 0;
+    while (q.length - head > 0) {
+        const [node, idx] = q[head++];
+        if (!hashMap.has(idx)) {
+            hashMap.set(idx, []);
         }
-        hashMap.get(pos).push(curr.val)
-        preorder(curr.left, pos - 1)
-        preorder(curr.right, pos + 1)
+        hashMap.get(idx).push(node.val);
+        if (node.left) {
+            q.push([node.left, idx - 1])
+        }
+
+        if (node.right) {
+            q.push([node.right, idx + 1])
+        }
     }
 
-    preorder(root,0)
+   
+
+    
     const entries = [...hashMap.entries()].sort((a,b) => a[0] - b[0]);
 
     const res = []
