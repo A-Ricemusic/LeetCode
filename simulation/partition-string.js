@@ -1,28 +1,29 @@
 /**
  * @param {string} s
  * @return {string[]}
- visited = ["a","b","bc","c"]
- curr = "cc"
- s = "abbccccd"
-
- lopp {
-    curr += s[i]
-    curr not in vis
-        vis.add(curr)
-        curr = ""
- }
+ 
+n = length of string
+m = amt of segments
+ time: o(n)
+ space: o(n) 
  */
 var partitionString = function(s) {
-    const visited = new Set();
-    let curr = "";
-    for (const char of s) {
-        curr += char
-        if (!visited.has(curr)) {
-            visited.add(curr);
-            curr = ""
+    const root = {};
+    const res = [];
+    let node = root;
+    let start = 0;
+    for (let i = 0; i < s.length; i++) {
+        const char = s[i];
+        if (!(char in node)) {
+            node[char] = {};
+            res.push(s.slice(start, i + 1));
+            start = i + 1;
+            node = root;
+        } else {
+            node = node[char]
         }
     }
 
-    return [...visited]
+    return res;
     
 };
