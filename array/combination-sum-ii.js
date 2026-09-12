@@ -22,7 +22,7 @@ var combinationSum2 = function(candidates, target) {
             res.push([...path]);
             return
         }
-        if (i >= nums.length) return;
+        if (i >= nums.length || sum > target) return;
         path.push(nums[i]);
         dfs(i + 1, sum + nums[i]);
         path.pop(); 
