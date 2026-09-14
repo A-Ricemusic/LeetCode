@@ -16,7 +16,9 @@ var mergeKLists = function(lists) {
     const minHeap = new PriorityQueue((a,b) => a[0] - b[0]);
     const dummy = new ListNode(0)
     for (const l of lists) {
-        minHeap.enqueue([l.val,l])
+        if (l) {
+            minHeap.enqueue([l.val,l])
+        }
     }
     let curr = dummy;
     while (!minHeap.isEmpty()) {
@@ -24,7 +26,7 @@ var mergeKLists = function(lists) {
         curr.next = node;
         curr = curr.next
         if (node.next) {
-            minHeap.enqueue([node.val,node])
+            minHeap.enqueue([node.next.val,node.next])
         }
     }
 
