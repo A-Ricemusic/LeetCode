@@ -22,6 +22,7 @@ var splitArray = function(nums, k) {
             } else {
                 currSum += num;
             }
+            if (count > k) break;
         }
         if (count > k) {
             l = m + 1;
