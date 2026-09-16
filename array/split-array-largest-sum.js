@@ -2,37 +2,35 @@
  * @param {number[]} nums
  * @param {number} k
  * @return {number}
-
+ nums = [7,2,5,10,8]
+ l = 10
+ r = 32
 
  */
 var splitArray = function(nums, k) {
-    const n = nums.length;
-    const memo = new Map();
-
-    const dfs = (i,m) => {
-
-        if (i === n) {
-            return m === 0? 0 : Infinity;
-        }
-        if (m === 0) return Infinity;
-        const state = `${i},${m}`;
-        if (memo.has(state)) return memo.get(state);
+    let l = Math.max(...nums);
+    let r = nums.reduce((a,c) => a + c, 0);
+    let res = r;
+    while (l <= r) {
+        const m = Math.floor(l + (r - l) / 2);
+        let count = 1;
         let currSum = 0;
-        let res = Infinity;
-        for (let j = i; j <= n - m; j++) {
-            currSum += nums[j];
-            res = Math.min(res, Math.max(currSum, dfs(j + 1,m - 1)));
-            if (currSum > res) {
-                break;
+        for (const num of nums) {
+            if (currSum + num > m) {
+                currSum = num;
+                count++;
+            } else {
+                currSum += num;
             }
         }
-        memo.set(state, res);
-
-        return res;
+        if (count > k) {
+            l = m + 1;
+        } else {
+            res = m;
+            r = m - 1;
+        }
     }
 
-
-
-    return dfs(0,k);
+    return res;
     
 };
