@@ -19,6 +19,7 @@ var combine = function(n, k) {
             return;
         }
         if (i >= n) return;
+        if (path.length + (n - i) < k) return;
         dfs(i + 1, path);
         path.push(nums[i])
         dfs(i + 1, path)
@@ -26,8 +27,6 @@ var combine = function(n, k) {
 
     }
 
-
     dfs(0,[]);
     return res;
-    
 };
