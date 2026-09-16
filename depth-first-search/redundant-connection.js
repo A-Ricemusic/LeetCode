@@ -1,6 +1,9 @@
 /**
  * @param {number[][]} edges
  * @return {number[]}
+
+ time: o(n)
+ space: o(n)
  */
 var findRedundantConnection = function(edges) {
     const n = edges.length;
@@ -12,19 +15,19 @@ var findRedundantConnection = function(edges) {
 
 
     const find = (x) => {
-        let par = par[x];
-        while (par[x] !== par) {
-            par[x] = par[par[x]]
-            par = par[x];
+        let p = par[x];
+        while (par[p] !== p) {
+            par[p] = par[par[p]]
+            p = par[p];
         }
 
-        return par;
+        return p;
     }
 
 
     const union = (x,y) => {
-        const p1 = find(x);
-        const p2 = find(y);
+        const p1 = find(x); 
+        const p2 = find(y); 
         if (p1 === p2) return false;
         if (rank[p1] < rank[p2]) {
             par[p1] = p2; 
