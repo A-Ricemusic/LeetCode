@@ -8,10 +8,10 @@ var search = function(nums, target) {
     let r = nums.length - 1;
 
     while (l <= r) {
-        const m = Math.max(l + (r - l) / 2);
+        const m = Math.floor(l + (r - l) / 2);
         if (nums[m] < target) {
             l = m + 1
-        } else if (nums[m] < target) {
+        } else if (nums[m] > target) {
             r = m - 1
         } else {
             return m;
