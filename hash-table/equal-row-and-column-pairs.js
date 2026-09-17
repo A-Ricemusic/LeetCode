@@ -5,7 +5,7 @@
 var equalPairs = function(grid) {
     const rows = new Map();
     const cols = new Map();
-
+    const n = grid.length
     for (let r = 0; r < n; r++) {
         let arr = [];
         for (let c = 0; c < n; c++) {
