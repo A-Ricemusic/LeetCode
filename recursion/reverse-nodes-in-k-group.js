@@ -9,14 +9,18 @@
  * @param {ListNode} head
  * @param {number} k
  * @return {ListNode}
+ n = number of nodes in list
+ time: O(n)
+ space: O(1)
  */
 var reverseKGroup = function(head, k) {
-    let revCount = 0;
+
     const dummy = new ListNode(0);
     let prev = dummy;
     let curr = head;
     let last = head;
     let count = 1;
+    dummy.next = head
 
     while (curr) {
         const next = curr.next;
@@ -24,7 +28,6 @@ var reverseKGroup = function(head, k) {
             reverseList(last, curr);
             prev.next = curr;
             prev = last;
-            revCount++;
             count = 0;
             last = next;
         }
@@ -33,7 +36,7 @@ var reverseKGroup = function(head, k) {
     }
     prev.next = last
 
-    return revCount >= 1? dummy.next : head;
+    return dummy.next 
     
 };
 
