@@ -32,16 +32,10 @@ var findMin = function(nums) {
             return nums[m];
         }
 
-        const end = nums[nums.length - 1];
-        const start = nums[0];
-        if (nums[m] < end && nums[m] < start) {
-            r = m - 1
-        } else if (nums[m] < end && nums[m] > start) {
-            r = m - 1
-        } else if (nums[m] > start && nums[m] > end) {
+        if (nums[m] > nums[r]) {
             l = m + 1
-        } else if (nums[m] > end && nums[m] < start) {
-            l = m + 1
+        } else {
+            r = m - 1
         }
 
     }
