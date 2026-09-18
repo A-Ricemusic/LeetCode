@@ -1,13 +1,16 @@
 /**
  * @param {number[][]} grid
  * @return {number}
+
+ [[3,2],[
+   [0,1]]
  */
 var swimInWater = function(grid) {
     const visited = new Set();
     const rows = grid.length;
     const cols = grid.length;
     const heap = new PriorityQueue((a,b) => a[0] - b[0]); // [w,r,c]
-    heap.enqueue([0,0,0]);
+    heap.enqueue([grid[0][0],0,0]);
     const dirs = [[1,0], [0,1], [-1,0], [0,-1]];
     while (!heap.isEmpty()) {
         const [w1,r,c] = heap.dequeue();
