@@ -18,7 +18,7 @@ var reverseKGroup = function(head, k) {
     let last = head;
     let count = 1;
 
-    while (curr.next) {
+    while (curr) {
         const next = curr.next;
         if (count === k) {
             reverseList(last, curr);
