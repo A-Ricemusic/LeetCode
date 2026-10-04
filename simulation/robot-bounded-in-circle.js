@@ -34,7 +34,7 @@ var isRobotBounded = function(instructions) {
         } else if (char === "L") {
             dirs = turnLeft[dirs]
         } else {
-            dirs = trunRight[dirs]
+            dirs = turnRight[dirs]
         }
     }
 
