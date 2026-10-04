@@ -1,26 +1,25 @@
 /**
  * @param {number[][]} wall
  * @return {number}
-
-
-
+ n = number of rows
+ m = number of elements in each row
+ k = number of ditinct cracks
+ time: O(n * m)
+ space:O(k)
  */
 var leastBricks = function(wall) {
-    const hashMap = new Map();
-    const len = wall[0].reduce((a,c) => a + c, 0);
-
-    for (const row of wall) {
-        let gap = 0;
-        for (let i = 0; i < row.length - 1; i++) {
-            gap += row[i];
-            hashMap.set(gap, (hashMap.get(gap) || 0) + 1);
+    const map = new Map();
+    const rows = wall.length;
+    let maxCracks = 0
+    for (const r of wall) {
+        let currSum = 0;
+        for (let i = 0; i < r.length - 1; i++) {
+            currSum += r[i]
+            map.set(currSum, (map.get(currSum) ?? 0) + 1);
+            maxCracks = Math.max(maxCracks, map.get(currSum))
         }
     }
-    let maxGap = 0
-    for (const [_,val] of hashMap.entries()) {
-        maxGap = Math.max(val, maxGap)
-    }
 
-    return  wall.length - maxGap
+    return rows - maxCracks; 
     
 };

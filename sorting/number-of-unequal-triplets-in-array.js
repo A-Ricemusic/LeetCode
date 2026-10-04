@@ -1,26 +1,42 @@
 /**
  * @param {number[]} nums
  * @return {number}
-    nums = [4,4,2,4,3]
- */
-var unequalTriplets = function(nums) {
 
-    const freqTable = new Map()
-    for (const num of nums) {
-        freqTable.set(num, (freqTable.get(num) || 0) + 1)
+    example case 1:
+    nums = [4,4,2,4,3]
+    {
+    2: 1
+    3: 1
+    4: 3
     }
 
 
+    example case 2:
+    nums = [4,4,2,4,3,5]
+    {
+    2: 1
+    3: 1
+    4: 3
+    5: 1
+    }
+    4 -> 2,3,4, 2,3,5, 3,4,5
+    for every unique group of 3 we would want to take the maximum number
 
-    const keys = [...freqTable.keys()]
-    let res = 0
-    for (let i = 0; i < keys.length; i++) {
-        for (let j = i + 1; j < keys.length; j++) {
-            for (let k = j + 1; k < keys.length; k++) {
-                const dv1 = keys[i]
-                const dv2 = keys[j]
-                const dv3 = keys[k]
-                res += freqTable.get(dv1) * freqTable.get(dv2) * freqTable.get(dv3)
+
+ */
+var unequalTriplets = function(nums) {
+    const hashMap = new Map();
+    for (const num of nums) {
+        hashMap.set(num, (hashMap.get(num) ?? 0) + 1);
+    }
+
+    const vals = [...hashMap.values()]
+    let res = 0;
+    const d = vals.length;
+    for (let i = 0; i < d - 2; i++) {
+        for (let j = i + 1; j < d - 1; j++) {
+            for (let k = j + 1; k < d; k++) {
+                res += (vals[i] * vals[j] * vals[k])
             }
         }
     }

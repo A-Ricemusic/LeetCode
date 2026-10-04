@@ -2,26 +2,16 @@
  * @param {number} amount
  * @param {number[]} coins
  * @return {number}
-  coins = [1,2,5] amt = 3
-  dfs(0,0) => dfs(0,1), dfs(1,0)
-  dfs(0,1) => dfs(0,2), dfs(1,1)
-  dfs(0,2) => dfs(0,3), dfs(1,2)
  */
 var change = function(amount, coins) {
-    const memo = new Map();
-    const dfs = (i, amt) => {
-        if (i >= coins.length) return amt === amount? 1: 0
-        if (amt > amount) return 0;
-        const state = `${i},${amt}`
-        if (memo.has(state)) return memo.get(state)
-        const c1 = dfs(i + 1, amt)
-        const c2 = dfs(i, amt + coins[i])
-        const res = c1 + c2
-        memo.set(state, res);
-        return res;
+    const n = coins.length;
+    let dp = new Array(amount + 1).fill(0);
+    dp[0] = 1;
+    for (let i = n - 1; i >= 0; i--) {
+        for (let j = 1; j <= amount; j++) {
+            dp[j] += j - coins[i] >= 0? dp[j - coins[i]] : 0; 
+        }
     }
-
-
-    return dfs(0,0)
+    return dp[amount]
     
 };

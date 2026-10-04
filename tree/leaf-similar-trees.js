@@ -12,29 +12,27 @@
  * @return {boolean}
  */
 var leafSimilar = function(root1, root2) {
-    const arr1 = []
-    const arr2 = []
+    const l1 = []
+    const l2 = []
 
-    const dfs = (root, arr) => {
-        if (!root.left && !root.right) {
-            arr.push(root.val)
+    const dfs = (node, arr) => {
+        if (!node) return;
+        dfs(node.left,arr);
+        if (!node.left && !node.right) {
+            arr.push(node.val)
         }
-        if (root.left) {
-            dfs(root.left, arr)
-        }
-
-        if (root.right) {
-            dfs(root.right,arr)
-        }
+        dfs(node.right,arr);
     }
+
+
+    dfs(root1, l1)
+    dfs(root2,l2)
+
+    if (l1.length !== l2.length) return false;
+    for (let i = 0; i < l1.length; i++) {
+        if (l1[i] !== l2[i]) return false;
+    }
+
+    return true;
     
-    dfs(root1,arr1)
-    dfs(root2,arr2)
-    if (arr1.length !== arr2.length) return false;
-
-    for (let i = 0; i < arr1.length; i++) {
-        if (arr1[i] !== arr2[i]) return false;
-    }
-
-    return true;    
 };

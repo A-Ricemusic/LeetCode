@@ -1,34 +1,29 @@
 /**
  * @param {number[]} nums
  * @return {number}
+
  */
 var lengthOfLIS = function(nums) {
-    const sub = [nums[0]];
-
-    /* 
-        nums = [10,9,2,5,3,7,2,18]
-        sub = [2,3,7]
-        i = 2
-    
-    */
-
-    for (let i = 1; i < nums.length; i++) {
-        if (nums[i] > sub[sub.length - 1]) {
-            sub.push(nums[i]);
-        } else {
-            let l = 0
-            let r = sub.length - 1
-            while (l < r) {
-                const m = Math.floor(l + (r - l) / 2)
-                if (sub[m] < nums[i]) {
-                    l = m + 1
-                } else {
-                    r = m
-                }
+    const tails = [];
+    // [0,1,3]
+    for (const num of nums) {
+        let l = 0;
+        let r = tails.length;
+        while (l < r) {
+            const m = Math.floor((l + r) / 2);
+            if (tails[m] < num) {
+                l = m + 1
+            } else {
+                r = m;
             }
-            sub[l] = nums[i]
+        }
+        if (l >= tails.length) {
+            tails.push(num)
+        } else {
+            tails[l] = num
         }
     }
+        return tails.length
 
-    return sub.length;
+
 };
